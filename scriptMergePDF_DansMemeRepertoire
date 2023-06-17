@@ -1,0 +1,36 @@
+import os
+from natsort import natsorted
+from PyPDF2 import PdfMerger
+
+def merge_pdfs(directory):
+    # Liste tous les fichiers PDF dans le répertoire spécifié
+    pdf_files = [file for file in os.listdir(directory) if file.lower().endswith('.pdf')]
+
+    # Trier les fichiers par ordre croissant en utilisant natsort (tient compte des lettres capitales et des chiffres dans le nom)
+    pdf_files = natsorted(pdf_files)
+
+    # Créer une instance du fusionneur PDF
+    merger = PdfMerger()
+
+    # Fusionner les fichiers PDF
+    for pdf_file in pdf_files:
+        file_path = os.path.join(directory, pdf_file)
+        merger.append(file_path)
+
+    # Chemin de sortie pour le fichier PDF fusionné
+    output_path = os.path.join(directory, 'merged.pdf')
+
+    # Écrire le fichier PDF fusionné
+    merger.write(output_path)
+    merger.close()
+
+    print('Les fichiers PDF ont été fusionnés avec succès.')
+
+#  !!!!!!!!!!!!!!!!!!!!!!!!!
+# Spécifier le répertoire contenant les fichiers PDF à fusionner
+#  !!!!!!!!!!!!!!!!!!!!!!!!!
+
+directory = r'C:/Users/.....'
+
+# Appeler la fonction pour fusionner les fichiers PDF dans le répertoire spécifié
+merge_pdfs(directory)
